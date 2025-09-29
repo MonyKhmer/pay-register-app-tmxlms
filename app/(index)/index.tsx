@@ -1,87 +1,65 @@
+
 import React from "react";
 import { Stack, router } from "expo-router";
-import { FlatList, Pressable, StyleSheet, View, Text } from "react-native";
-// Components
+import { ScrollView, StyleSheet, View, Text, Pressable } from "react-native";
 import { IconCircle } from "@/components/IconCircle";
 import { IconSymbol } from "@/components/IconSymbol";
-import { BodyScrollView } from "@/components/BodyScrollView";
 import { Button } from "@/components/button";
-// Constants & Hooks
-import { backgroundColors } from "@/constants/Colors";
-
-const ICON_COLOR = "#007AFF";
+import { appleBlue, appleGreen } from "@/constants/Colors";
 
 export default function HomeScreen() {
+  console.log("HomeScreen rendered");
 
-  const modalDemos = [
+  const features = [
     {
-      title: "Standard Modal",
-      description: "Full screen modal presentation",
-      route: "/modal",
-      color: "#007AFF",
+      title: "Student Registration",
+      description: "Create your account and get started",
+      route: "/register",
+      emoji: "👤",
+      color: appleBlue,
     },
     {
-      title: "Form Sheet",
-      description: "Bottom sheet with detents and grabber",
-      route: "/formsheet",
-      color: "#34C759",
+      title: "Login",
+      description: "Access your existing account",
+      route: "/login",
+      emoji: "🔐",
+      color: appleGreen,
     },
     {
-      title: "Transparent Modal",
-      description: "Overlay without obscuring background",
-      route: "/transparent-modal",
+      title: "Payment Options",
+      description: "View available payment methods",
+      route: "/payment-options",
+      emoji: "💳",
       color: "#FF9500",
+    },
+    {
+      title: "Payment History",
+      description: "Track your payment records",
+      route: "/payment-history",
+      emoji: "📊",
+      color: "#AF52DE",
     }
   ];
 
-  const renderModalDemo = ({ item }: { item: typeof modalDemos[0] }) => (
-    <View style={styles.demoCard}>
-      <View style={[styles.demoIcon, { backgroundColor: item.color }]}>
-        <IconSymbol name="square.grid.3x3" color="white" size={24} />
-      </View>
-      <View style={styles.demoContent}>
-        <Text style={styles.demoTitle}>{item.title}</Text>
-        <Text style={styles.demoDescription}>{item.description}</Text>
-      </View>
-      <Button
-        variant="outline"
-        size="sm"
-        onPress={() => router.push(item.route as any)}
-      >
-        Try It
-      </Button>
-    </View>
-  );
-
-  const renderEmptyList = () => (
-    <BodyScrollView contentContainerStyle={styles.emptyStateContainer}>
+  const renderFeatureCard = (item: typeof features[0], index: number) => (
+    <Pressable
+      key={index}
+      style={styles.featureCard}
+      onPress={() => {
+        console.log(`Navigating to ${item.route}`);
+        router.push(item.route as any);
+      }}
+    >
       <IconCircle
-        emoji=""
-        backgroundColor={
-          backgroundColors[Math.floor(Math.random() * backgroundColors.length)]
-        }
+        emoji={item.emoji}
+        backgroundColor={item.color}
+        size={60}
       />
-    </BodyScrollView>
-  );
-
-  const renderHeaderRight = () => (
-    <Pressable
-      onPress={() => {console.log("plus")}}
-      style={styles.headerButtonContainer}
-    >
-      <IconSymbol name="plus" color={ICON_COLOR} />
-    </Pressable>
-  );
-
-  const renderHeaderLeft = () => (
-    <Pressable
-      onPress={() => {console.log("gear")}}
-      style={styles.headerButtonContainer}
-    >
-      <IconSymbol
-        name="gear"
-        color={ICON_COLOR}
-      />
+      <View style={styles.featureContent}>
+        <Text style={styles.featureTitle}>{item.title}</Text>
+        <Text style={styles.featureDescription}>{item.description}</Text>
+      </View>
+      <IconSymbol name="chevron.right" color="#999" size={20} />
     </Pressable>
   );
 
@@ -89,20 +67,49 @@ export default function HomeScreen() {
     <>
       <Stack.Screen
         options={{
-          title: "Building the app...",
-          headerRight: renderHeaderRight,
-          headerLeft: renderHeaderLeft,
+          title: "Institute Payment",
+          headerStyle: {
+            backgroundColor: '#fff',
+          },
+          headerTitleStyle: {
+            color: '#333',
+            fontSize: 20,
+            fontWeight: '600',
+          },
         }}
       />
       <View style={styles.container}>
-        <FlatList
-          data={modalDemos}
-          renderItem={renderModalDemo}
-          keyExtractor={(item) => item.route}
-          contentContainerStyle={styles.listContainer}
-          contentInsetAdjustmentBehavior="automatic"
+        <ScrollView
+          contentContainerStyle={styles.scrollContainer}
           showsVerticalScrollIndicator={false}
-        />
+        >
+          <View style={styles.headerSection}>
+            <Text style={styles.welcomeTitle}>Welcome to</Text>
+            <Text style={styles.instituteTitle}>Institute Payment Portal</Text>
+            <Text style={styles.subtitle}>
+              Manage your payments and registration easily
+            </Text>
+          </View>
+
+          <View style={styles.featuresSection}>
+            {features.map((feature, index) => renderFeatureCard(feature, index))}
+          </View>
+
+          <View style={styles.footerSection}>
+            <Text style={styles.footerText}>
+              Need help? Contact our support team
+            </Text>
+            <Button
+              variant="outline"
+              size="sm"
+              onPress={() => {
+                console.log("Support pressed");
+              }}
+            >
+              Get Support
+            </Button>
+          </View>
+        </ScrollView>
       </View>
     </>
   );
@@ -111,71 +118,74 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#f8f9fa',
+  },
+  scrollContainer: {
+    paddingBottom: 40,
   },
   headerSection: {
-    padding: 20,
-    paddingBottom: 16,
+    padding: 24,
+    paddingTop: 40,
     backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: '#e5e5e5',
+    alignItems: 'center',
   },
-  headerTitle: {
-    fontSize: 24,
+  welcomeTitle: {
+    fontSize: 18,
+    color: '#666',
+    marginBottom: 4,
+  },
+  instituteTitle: {
+    fontSize: 28,
     fontWeight: 'bold',
     color: '#333',
     marginBottom: 8,
+    textAlign: 'center',
   },
-  headerSubtitle: {
+  subtitle: {
     fontSize: 16,
     color: '#666',
+    textAlign: 'center',
     lineHeight: 22,
   },
-  listContainer: {
-    paddingVertical: 16,
-    paddingHorizontal: 16,
+  featuresSection: {
+    padding: 20,
+    gap: 16,
   },
-  demoCard: {
+  featureCard: {
     backgroundColor: 'white',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
+    borderRadius: 16,
+    padding: 20,
     flexDirection: 'row',
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 2,
+    shadowRadius: 8,
+    elevation: 3,
   },
-  demoIcon: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 16,
-  },
-  demoContent: {
+  featureContent: {
     flex: 1,
+    marginLeft: 16,
   },
-  demoTitle: {
+  featureTitle: {
     fontSize: 18,
     fontWeight: '600',
     color: '#333',
     marginBottom: 4,
   },
-  demoDescription: {
+  featureDescription: {
     fontSize: 14,
     color: '#666',
-    lineHeight: 18,
+    lineHeight: 20,
   },
-  emptyStateContainer: {
-    alignItems: "center",
-    gap: 8,
-    paddingTop: 100,
+  footerSection: {
+    padding: 20,
+    alignItems: 'center',
+    gap: 16,
   },
-  headerButtonContainer: {
-    padding: 6, // Just enough padding around the 24px icon
+  footerText: {
+    fontSize: 14,
+    color: '#666',
+    textAlign: 'center',
   },
 });
