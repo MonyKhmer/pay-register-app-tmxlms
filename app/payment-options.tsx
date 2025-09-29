@@ -5,6 +5,7 @@ import { ScrollView, StyleSheet, View, Text, Pressable, Alert } from "react-nati
 import { Button } from "@/components/button";
 import { IconSymbol } from "@/components/IconSymbol";
 import { IconCircle } from "@/components/IconCircle";
+import { HeaderLogo } from "@/components/HeaderLogo";
 import { appleBlue, appleGreen } from "@/constants/Colors";
 
 export default function PaymentOptionsScreen() {
@@ -120,6 +121,9 @@ export default function PaymentOptionsScreen() {
             >
               <IconSymbol name="chevron.left" color={appleBlue} size={20} />
             </Button>
+          ),
+          headerRight: () => (
+            <HeaderLogo size={24} />
           ),
         }}
       />

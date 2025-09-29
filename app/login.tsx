@@ -4,6 +4,7 @@ import { Stack, router } from "expo-router";
 import { ScrollView, StyleSheet, View, Text, TextInput, Alert } from "react-native";
 import { Button } from "@/components/button";
 import { IconSymbol } from "@/components/IconSymbol";
+import { HeaderLogo } from "@/components/HeaderLogo";
 import { appleBlue } from "@/constants/Colors";
 
 export default function LoginScreen() {
@@ -73,6 +74,9 @@ export default function LoginScreen() {
             >
               <IconSymbol name="chevron.left" color={appleBlue} size={20} />
             </Button>
+          ),
+          headerRight: () => (
+            <HeaderLogo size={24} />
           ),
         }}
       />

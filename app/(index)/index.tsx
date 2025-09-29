@@ -5,6 +5,7 @@ import { ScrollView, StyleSheet, View, Text, Pressable } from "react-native";
 import { IconCircle } from "@/components/IconCircle";
 import { IconSymbol } from "@/components/IconSymbol";
 import { Button } from "@/components/button";
+import { HeaderLogo } from "@/components/HeaderLogo";
 import { appleBlue, appleGreen } from "@/constants/Colors";
 
 export default function HomeScreen() {
@@ -76,6 +77,9 @@ export default function HomeScreen() {
             fontSize: 20,
             fontWeight: '600',
           },
+          headerLeft: () => (
+            <HeaderLogo size={28} />
+          ),
         }}
       />
       <View style={styles.container}>

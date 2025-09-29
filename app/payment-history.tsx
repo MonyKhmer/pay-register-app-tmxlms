@@ -5,6 +5,7 @@ import { ScrollView, StyleSheet, View, Text, Pressable } from "react-native";
 import { Button } from "@/components/button";
 import { IconSymbol } from "@/components/IconSymbol";
 import { IconCircle } from "@/components/IconCircle";
+import { HeaderLogo } from "@/components/HeaderLogo";
 import { appleBlue, appleGreen, appleRed } from "@/constants/Colors";
 
 export default function PaymentHistoryScreen() {
@@ -172,6 +173,9 @@ export default function PaymentHistoryScreen() {
             >
               <IconSymbol name="chevron.left" color={appleBlue} size={20} />
             </Button>
+          ),
+          headerRight: () => (
+            <HeaderLogo size={24} />
           ),
         }}
       />
